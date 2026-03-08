@@ -34,3 +34,12 @@ def draw_lines(color = WHITE):
     for i in range(1,BOARD_ROWS):
         pygame.draw.line(screen,color, (0,SQUARE_SIZE*i),(WIDTH,SQUARE_SIZE*i),LINE_WIDTH)
         pygame.draw.line(screen,color, (SQUARE_SIZE*i,0),(SQUARE_SIZE*i,HEIGHT),LINE_WIDTH)
+
+def draw_figures(color=WHITE):
+    for row in range(BOARD_ROWS):
+        for col in range(BOARD_COLS):
+            if board[row][col] == 1:
+                pygame.draw.circle(screen,color,(int (col*SQUARE_SIZE+SQUARE_SIZE//2),int(row * SQUARE_SIZE + SQUARE_SIZE//2)),CIRCLE_RADIUS,CIRCLE_WIDTH)
+            elif board[row][col] == 2 :
+                pygame.draw.line(screen, color ,(col*SQUARE_SIZE + SQUARE_SIZE//4,row*SQUARE_SIZE + SQUARE_SIZE//4),(col*SQUARE_SIZE+3*SQUARE_SIZE//4,col*SQUARE_SIZE+3*SQUARE_SIZE//4))
+                pygame.draw.line(screen, color ,(col*SQUARE_SIZE + SQUARE_SIZE//4,row*SQUARE_SIZE + 3*SQUARE_SIZE//4),(col*SQUARE_SIZE+3*SQUARE_SIZE//4,col*SQUARE_SIZE+SQUARE_SIZE//4))
