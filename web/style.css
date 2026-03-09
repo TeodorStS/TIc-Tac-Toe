@@ -1,79 +1,124 @@
-/* Apply to everything on the page */
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&display=swap');
+
+:root {
+  --bg:       #111111;
+  --surface:  #1a1a1a;
+  --border:   #333333;
+  --text:     #e8e8e8;
+  --muted:    #666666;
+  --player:   #e8e8e8;
+  --ai:       #666666;
+  --hover:    #222222;
+  --win:      #1f2a1f;
+  --win-text: #6fcf6f;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-  /* Centers all content horizontally */
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: 'DM Mono', monospace;
+  min-height: 100vh;
   display: flex;
-
-  /* Stack children vertically instead of side by side */
   flex-direction: column;
-
-  /* Center children along the vertical axis */
   align-items: center;
-
-  /* A neutral background so the board stands out */
-  background-color: #f0f0f0;
-
-  /* A clean readable font */
-  font-family: sans-serif;
+  justify-content: center;
+  gap: 32px;
 }
 
-/* The board is a 3x3 grid */
+h1 {
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+#status {
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  color: var(--text);
+  height: 1.4em;
+}
+
+/* The board uses a grid but relies on cell borders for the lines */
 #board {
-  /* CSS Grid lets us define rows and columns */
   display: grid;
-
-  /* Create 3 equal columns, each 100px wide */
-  grid-template-columns: repeat(3, 100px);
-
-  /* Create 3 equal rows, each 100px tall */
-  grid-template-rows: repeat(3, 100px);
-
-  /* A visible border around the whole board */
-  border: 2px solid black;
+  grid-template-columns: repeat(3, 120px);
+  grid-template-rows: repeat(3, 120px);
 }
 
-/* Each individual cell inside the board */
 .cell {
-  /* Each cell is 100x100 to match the grid definition above */
-  width: 100px;
-  height: 100px;
-
-  /* A border on every cell creates the grid lines */
-  border: 1px solid black;
-
-  /* Large text so X and O are easy to see */
-  font-size: 48px;
-
-  /* Center the X or O text horizontally and vertically */
+  width: 120px;
+  height: 120px;
   display: flex;
   align-items: center;
   justify-content: center;
-
-  /* Show a pointer cursor so the user knows the cell is clickable */
+  font-size: 42px;
+  font-weight: 500;
   cursor: pointer;
+  color: var(--text);
 
-  /* White background for empty cells */
-  background-color: white;
+  /* Draw grid lines using borders only on right and bottom,
+     so we get inner lines without an outer border on the board */
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+
+  transition: background-color 0.1s;
 }
 
-/* When hovering over an empty cell, give a subtle visual feedback */
-.cell:hover {
-  background-color: #e0e0e0;
+/* Remove the right border on every 3rd cell (last column) */
+.cell:nth-child(3n) {
+  border-right: none;
 }
 
-/* Cells that are already taken should not look clickable */
+/* Remove the bottom border on the last 3 cells (last row) */
+.cell:nth-child(n+7) {
+  border-bottom: none;
+}
+
+.cell:hover:not(.taken) {
+  background-color: var(--hover);
+}
+
 .cell.taken {
   cursor: default;
 }
 
-/* Space out the status text and button a little */
-#status {
-  font-size: 20px;
-  margin: 16px 0;
+/* O is bright, X is muted — visually separates player from AI */
+.cell.player {
+  color: var(--player);
+}
+
+.cell.ai {
+  color: var(--ai);
+}
+
+/* Winning cells get a subtle green tint */
+.cell.win-cell {
+  background-color: var(--win);
+  color: var(--win-text);
 }
 
 #reset-btn {
-  margin-top: 16px;
-  padding: 8px 24px;
-  font-size: 16px;
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: 'DM Mono', monospace;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 10px 28px;
   cursor: pointer;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+#reset-btn:hover {
+  border-color: var(--text);
+  color: var(--text);
 }
