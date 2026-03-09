@@ -1,11 +1,29 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 from game import *
+import os
 
 app = Flask(__name__)
 CORS(app)
 
 game_over = False
+
+# This tells Flask where the web folder is so it can serve the HTML, CSS and JS files.
+# os.path.dirname(__file__) gets the directory where server.py lives.
+# We then join that with "web" to get the full path to the web folder.
+WEB_FOLDER = os.path.join(os.path.dirname(__file__), "web")
+
+# This route serves the frontend when you visit http://localhost:5000
+# send_from_directory sends a file from a folder as a response
+@app.route('/')
+def index():
+    return send_from_directory(WEB_FOLDER, "index.html")
+
+# This route handles any other file the browser requests, like style.css or script.js
+# <path:filename> is a variable that captures whatever filename the browser asks for
+@app.route('/<path:filename>')
+def static_files(filename):
+    return send_from_directory(WEB_FOLDER, filename)
 
 @app.route('/state', methods=['GET'])
 def get_state():
@@ -28,7 +46,6 @@ def player_move():
     if not available_square(row, col):
         return jsonify({"error": "Square already taken."}), 400
 
-    # Player move
     mark_square(row, col, 1)
     if check_win(1):
         game_over = True
@@ -38,7 +55,6 @@ def player_move():
         game_over = True
         return jsonify({"board": board.tolist(), "winner": "draw", "game_over": True})
 
-    # AI move
     best_move()
     if check_win(2):
         game_over = True
@@ -60,4 +76,4 @@ def reset():
     return jsonify({"board": board.tolist(), "game_over": False})
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=True, host='0.0.0.0', port=5000)

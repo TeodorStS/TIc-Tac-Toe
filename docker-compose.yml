@@ -1,0 +1,17 @@
+services:
+  web:
+    # Build the image using the Dockerfile in the current folder
+    build: .
+
+    # Map port 5000 on your machine to port 5000 inside the container.
+    # Format is "your_machine:container"
+    # This is what actually opens the port so your browser can reach it.
+    ports:
+      - "5000:5000"
+
+    # Mount your project folder into the container.
+    # This means if you edit style.css or script.js, the changes are
+    # reflected immediately without needing to rebuild the container.
+    # Format is "your_machine_path:container_path"
+    volumes:
+      - .:/app
