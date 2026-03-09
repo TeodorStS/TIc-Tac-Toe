@@ -1,6 +1,6 @@
 # Tic Tac Toe
 
-A tic tac toe game with an AI opponent built using minimax. Started as a pure pygame project, then extended to have a Python Flask backend with a JavaScript frontend.
+A simple tic tac toe game with an AI opponent built using minimax. Started as a pure pygame project, then extended to have a Python Flask backend with a JavaScript frontend.
 
 ## How to run
 
@@ -15,7 +15,7 @@ python main.py
 pip install flask flask-cors numpy
 python server.py
 ```
-Then open `index.html` in your browser.
+Then open `web/index.html` in your browser.
 
 ## Dependencies
 
@@ -23,3 +23,7 @@ Then open `index.html` in your browser.
 - numpy
 - flask
 - flask-cors
+
+## Note
+
+This project was built with the assistance of Claude (Anthropic) as a learning exercise.
