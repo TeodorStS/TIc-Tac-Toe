@@ -1,9 +1,25 @@
-UNFINISHED PROJECT of a tic tac toe game The idea behind is to first create it in pyhton and then use python as a backend for a js front end connected using api calls
-The tic tac toe python code WORKS 
+# Tic Tac Toe
 
-You need pygame and numpy for this game.
+A tic tac toe game with an AI opponent built using minimax. Started as a pure pygame project, then extended to have a Python Flask backend with a JavaScript frontend.
 
-Flask API endpoints are going to be used for the js so flask is needed too.
+## How to run
 
-main.py contains the code in pygame 
+**Pygame version**
+```bash
+pip install pygame numpy
+python main.py
+```
 
+**JS frontend version**
+```bash
+pip install flask flask-cors numpy
+python server.py
+```
+Then open `index.html` in your browser.
+
+## Dependencies
+
+- pygame
+- numpy
+- flask
+- flask-cors

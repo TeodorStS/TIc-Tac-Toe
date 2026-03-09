@@ -1,0 +1,79 @@
+/* Apply to everything on the page */
+body {
+  /* Centers all content horizontally */
+  display: flex;
+
+  /* Stack children vertically instead of side by side */
+  flex-direction: column;
+
+  /* Center children along the vertical axis */
+  align-items: center;
+
+  /* A neutral background so the board stands out */
+  background-color: #f0f0f0;
+
+  /* A clean readable font */
+  font-family: sans-serif;
+}
+
+/* The board is a 3x3 grid */
+#board {
+  /* CSS Grid lets us define rows and columns */
+  display: grid;
+
+  /* Create 3 equal columns, each 100px wide */
+  grid-template-columns: repeat(3, 100px);
+
+  /* Create 3 equal rows, each 100px tall */
+  grid-template-rows: repeat(3, 100px);
+
+  /* A visible border around the whole board */
+  border: 2px solid black;
+}
+
+/* Each individual cell inside the board */
+.cell {
+  /* Each cell is 100x100 to match the grid definition above */
+  width: 100px;
+  height: 100px;
+
+  /* A border on every cell creates the grid lines */
+  border: 1px solid black;
+
+  /* Large text so X and O are easy to see */
+  font-size: 48px;
+
+  /* Center the X or O text horizontally and vertically */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Show a pointer cursor so the user knows the cell is clickable */
+  cursor: pointer;
+
+  /* White background for empty cells */
+  background-color: white;
+}
+
+/* When hovering over an empty cell, give a subtle visual feedback */
+.cell:hover {
+  background-color: #e0e0e0;
+}
+
+/* Cells that are already taken should not look clickable */
+.cell.taken {
+  cursor: default;
+}
+
+/* Space out the status text and button a little */
+#status {
+  font-size: 20px;
+  margin: 16px 0;
+}
+
+#reset-btn {
+  margin-top: 16px;
+  padding: 8px 24px;
+  font-size: 16px;
+  cursor: pointer;
+}
