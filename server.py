@@ -6,6 +6,8 @@ import os
 app = Flask(__name__)
 CORS(app)
 
+# Server owns the game state — one board, one game_over flag
+board = new_board()
 game_over = False
 
 WEB_FOLDER = os.path.join(os.path.dirname(__file__), "web")
@@ -32,24 +34,24 @@ def player_move():
     row = data.get("row")
     col = data.get("col")
 
-    if not available_square(row, col):
+    if not available_square(board, row, col):
         return jsonify({"error": "Square already taken."}), 400
 
-    mark_square(row, col, 1)
-    if check_win(1):
+    mark_square(board, row, col, 1)
+    if check_win(board, 1):
         game_over = True
         return jsonify({"board": board.tolist(), "winner": 1, "game_over": True})
 
-    if is_board_full():
+    if is_board_full(board):
         game_over = True
         return jsonify({"board": board.tolist(), "winner": "draw", "game_over": True})
 
-    best_move()
-    if check_win(2):
+    best_move(board)
+    if check_win(board, 2):
         game_over = True
         return jsonify({"board": board.tolist(), "winner": 2, "game_over": True})
 
-    if is_board_full():
+    if is_board_full(board):
         game_over = True
         return jsonify({"board": board.tolist(), "winner": "draw", "game_over": True})
 
@@ -57,10 +59,8 @@ def player_move():
 
 @app.route('/reset', methods=['POST'])
 def reset():
-    global game_over
-    for row in range(BOARD_ROWS):
-        for col in range(BOARD_COLS):
-            board[row][col] = 0
+    global board, game_over
+    board = new_board()
     game_over = False
     return jsonify({"board": board.tolist(), "game_over": False})
 
