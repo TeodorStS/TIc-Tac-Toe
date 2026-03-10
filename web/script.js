@@ -85,9 +85,10 @@ async function handleReset() {
 }
 
 async function loadState() {
-  const response = await fetch(API + "/state");
-  const data     = await response.json();
+  const response = await fetch(API + "/reset", { method: "POST" });
+  const data = await response.json();
   renderBoard(data.board);
+  statusEl.textContent = "your turn";
 }
 
 resetBtn.addEventListener("click", handleReset);
