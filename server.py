@@ -8,22 +8,11 @@ CORS(app)
 
 game_over = False
 
-# This tells Flask where the web folder is so it can serve the HTML, CSS and JS files.
-# os.path.dirname(__file__) gets the directory where server.py lives.
-# We then join that with "web" to get the full path to the web folder.
 WEB_FOLDER = os.path.join(os.path.dirname(__file__), "web")
 
-# This route serves the frontend when you visit http://localhost:5000
-# send_from_directory sends a file from a folder as a response
 @app.route('/')
 def index():
     return send_from_directory(WEB_FOLDER, "index.html")
-
-# This route handles any other file the browser requests, like style.css or script.js
-# <path:filename> is a variable that captures whatever filename the browser asks for
-@app.route('/<path:filename>')
-def static_files(filename):
-    return send_from_directory(WEB_FOLDER, filename)
 
 @app.route('/state', methods=['GET'])
 def get_state():
@@ -74,6 +63,11 @@ def reset():
             board[row][col] = 0
     game_over = False
     return jsonify({"board": board.tolist(), "game_over": False})
+
+# catch-all is LAST so it never intercepts the API routes above
+@app.route('/<path:filename>')
+def static_files(filename):
+    return send_from_directory(WEB_FOLDER, filename)
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
