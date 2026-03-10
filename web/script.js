@@ -28,7 +28,6 @@ function renderBoard(boardState, winCells = []) {
         });
       }
 
-      // If this cell is part of the winning line, highlight it
       if (winCells.some(([wr, wc]) => wr === row && wc === col)) {
         cell.classList.add("win-cell");
       }
@@ -38,7 +37,6 @@ function renderBoard(boardState, winCells = []) {
   }
 }
 
-// Finds which 3 cells form the winning line so we can highlight them
 function getWinCells(boardState, player) {
   const b = boardState;
   for (let r = 0; r < 3; r++)
@@ -63,14 +61,20 @@ async function handleMove(row, col) {
 
   const data = await response.json();
 
+  // If the server returned an error, stop here and log it
+  if (data.error) {
+    console.log("Server error:", data.error);
+    return;
+  }
+
   if (data.game_over) {
     const winnerPlayer = data.winner === 1 ? 1 : 2;
     const winCells = data.winner !== "draw" ? getWinCells(data.board, winnerPlayer) : [];
     renderBoard(data.board, winCells);
 
-    if (data.winner === 1)        statusEl.textContent = "you win.";
-    else if (data.winner === 2)   statusEl.textContent = "ai wins.";
-    else                          statusEl.textContent = "draw.";
+    if (data.winner === 1)       statusEl.textContent = "you win.";
+    else if (data.winner === 2)  statusEl.textContent = "ai wins.";
+    else                         statusEl.textContent = "draw.";
   } else {
     renderBoard(data.board);
     statusEl.textContent = "your turn";
