@@ -1,6 +1,9 @@
 # Tic Tac Toe
 
-A tic tac toe game with an AI opponent built using minimax. Started as a pure pygame project, then extended to have a Python Flask backend with a JavaScript frontend, containerised with Docker.
+A tic tac toe game with an AI opponent built using minimax. Started as a pure pygame project, then extended to have a Python Flask backend with a JavaScript frontend, containerised with Docker and deployed to Fly.io.
+
+## Live Demo
+[Play it here](https://tic-tac-toe-small-meadow-4112.fly.dev/)
 
 ## Project Structure
 
@@ -13,6 +16,7 @@ tic_tac_toe/
 ├── requirements.txt
 ├── Dockerfile
 ├── docker-compose.yml
+├── fly.toml
 └── web/
     ├── index.html
     ├── style.css
