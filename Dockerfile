@@ -1,7 +1,10 @@
 # Start from an official Python image.
-# This is the base layer — a minimal Linux system with Python 3.11 already installed.
+# This is the base layer — a minimal Linux system with Python 3.13 already installed.
 # "slim" means it's a stripped down version with only what's needed, keeping the image small.
-FROM python:3.11-slim
+FROM python:3.13-slim
+
+# Print Python output straight away so it shows up in "docker compose logs".
+ENV PYTHONUNBUFFERED=1
 
 # Set the working directory inside the container.
 # All following commands will run from this folder.
@@ -15,7 +18,8 @@ WORKDIR /app
 COPY requirements.txt .
 
 # Install the Python dependencies listed in requirements.txt
-RUN pip install -r requirements.txt
+# --no-cache-dir skips pip's download cache, which would only make the image bigger.
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy the rest of your project files into the container.
 # The first dot is the source (your project folder on your machine).

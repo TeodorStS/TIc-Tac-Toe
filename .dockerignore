@@ -1,8 +1,13 @@
-# flyctl launch added from .gitignore
-**\__pycache__
-**\*.pyc
-**\*.pyo
-**\venv
-**\.env
-**\.DS_Store
+# Files that should never be copied into the image.
+# Forward slashes only: Docker builds on Linux treat "\" as an escape character.
+.git
+.github
+.vscode
+**/__pycache__
+**/*.pyc
+**/*.pyo
+venv
+.venv
+.env
+**/.DS_Store
 fly.toml

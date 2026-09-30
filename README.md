@@ -40,9 +40,9 @@ Then open `http://localhost:5000` in your browser.
 
 **JS frontend version (with Docker)**
 ```bash
-docker-compose up
+docker compose up -d --build
 ```
-Then open `http://localhost:5000` in your browser.
+The port is published on the Docker bridge (`172.17.0.1:5000`) so an Nginx container can proxy to it without exposing it to the internet. To try it locally instead, run `BIND_ADDR=127.0.0.1 docker compose up --build` and open `http://localhost:5000`.
 
 ## Dependencies
 

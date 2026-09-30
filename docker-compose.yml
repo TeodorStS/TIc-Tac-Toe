@@ -3,5 +3,8 @@ services:
     # Build the image using the Dockerfile in the current folder
     build: .
     restart: unless-stopped
-    expose:
-      - "5000"
+    ports:
+      # Publish on the Docker bridge gateway (172.17.0.1), not 0.0.0.0, so the app is
+      # reachable from the Nginx container but not from the internet.
+      # Point Nginx at http://172.17.0.1:5000. For local testing, set BIND_ADDR=127.0.0.1.
+      - "${BIND_ADDR:-172.17.0.1}:5000:5000"
